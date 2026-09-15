@@ -32,6 +32,9 @@ export function getLocalDateKey(date = new Date()): string {
 
 export function parseDateKey(key: string): Date {
   const [year, month, day] = key.split("-").map(Number);
+  const year = yearValue ?? 0;
+  const month = monthValue ?? 1;
+  const day = dayValue ?? 1;
   return new Date(year, month - 1, day);
 }
 
@@ -105,7 +108,9 @@ export function getHistoryWeeks(weeks = 52): string[][] {
 export function monthLabelsForWeeks(weeks: string[][]): { label: string; index: number }[] {
   const labels: { label: string; index: number }[] = [];
   weeks.forEach((week, index) => {
-    const date = parseDateKey(week[0]);
+    const firstDay = week[0];
+    if (!firstDay) return;
+    const date = parseDateKey(firstDay);
     const label = date.toLocaleDateString(undefined, { month: "short" });
     if (index === 0 || labels.at(-1)?.label !== label) labels.push({ label, index });
   });
