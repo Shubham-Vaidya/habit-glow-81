@@ -31,7 +31,7 @@ export function getLocalDateKey(date = new Date()): string {
 }
 
 export function parseDateKey(key: string): Date {
-  const [year, month, day] = key.split("-").map(Number);
+  const [yearValue, monthValue, dayValue] = key.split("-").map(Number);
   const year = yearValue ?? 0;
   const month = monthValue ?? 1;
   const day = dayValue ?? 1;
