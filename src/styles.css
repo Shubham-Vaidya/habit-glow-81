@@ -166,3 +166,15 @@
     color: var(--color-foreground);
   }
 }
+
+@utility glass-panel {
+  border: 1px solid color-mix(in oklab, var(--color-card) 70%, transparent);
+  border-radius: 1.5rem;
+  background: color-mix(in oklab, var(--color-card) 66%, transparent);
+  box-shadow: 0 18px 50px -28px color-mix(in oklab, var(--ink) 28%, transparent);
+  backdrop-filter: blur(22px);
+}
+
+@utility text-balance {
+  text-wrap: balance;
+}
