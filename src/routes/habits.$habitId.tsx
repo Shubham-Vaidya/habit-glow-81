@@ -123,4 +123,4 @@ function HabitDetailPage() {
 }
 
 function Stat({ label, value }: { label: string; value: string | number }) { return <div className="glass-panel p-4"><p className="font-display text-2xl font-bold">{value}</p><p className="mt-1 text-xs text-muted-foreground">{label}</p></div>; }
-function DetailShell({ children }: { children: ReactNode }) { return <main className="relative flex min-h-screen items-center justify-center overflow-hidden bg-background px-4 py-8 text-foreground sm:px-6"><div className="pointer-events-none fixed inset-0"><div className="absolute -right-24 -top-40 size-96 rounded-full bg-brand/18 blur-3xl" /><div className="absolute -left-24 top-1/3 size-80 rounded-full bg-accent/14 blur-3xl" /></div><div className="relative flex w-full justify-center">{children}</div></main>; }
+function DetailShell({ children }: { children: ReactNode }) { return <main className="relative flex min-h-screen items-center justify-center overflow-hidden bg-background px-4 py-8 text-foreground sm:px-6"><div className="relative flex w-full justify-center">{children}</div></main>; }

@@ -97,7 +97,8 @@ export function getHistoryWeeks(weeks = 52): string[][] {
   const end = addDays(today, 0);
   const start = addDays(end, -(weeks * 7 - 1));
   const firstDay = start.getDay();
-  const alignedStart = addDays(start, -firstDay);
+  const daysFromMonday = firstDay === 0 ? 6 : firstDay - 1;
+  const alignedStart = addDays(start, -daysFromMonday);
   return Array.from({ length: weeks }, (_, weekIndex) =>
     Array.from({ length: 7 }, (_, dayIndex) =>
       getLocalDateKey(addDays(alignedStart, weekIndex * 7 + dayIndex)),
