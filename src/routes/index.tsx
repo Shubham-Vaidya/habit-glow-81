@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useEffect, useMemo, useState } from "react";
-import { ArrowRight, Check, ChevronRight, LoaderCircle, LogOut, Plus, Sparkles, X } from "lucide-react";
+import { useEffect, useState, type FormEvent } from "react";
+import { ArrowRight, Check, LoaderCircle, LogOut, Plus, Sparkles, X } from "lucide-react";
 import { lovable } from "@/integrations/lovable";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
@@ -80,7 +80,7 @@ function AuthScreen() {
   const [message, setMessage] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
 
-  async function submit(event: React.FormEvent<HTMLFormElement>) {
+  async function submit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setLoading(true);
     setError(null);
@@ -225,7 +225,7 @@ function HabitCard({ habit, completions, saving, onToggle, onEdit }: { habit: Ha
   const previewDays = getHistoryWeeks(4).flat().slice(-21);
   const doneSet = new Set(completions.filter((completion) => completion.habit_id === habit.id && completion.completed).map((completion) => completion.completion_date));
   return <article className={`glass-panel p-5 transition hover:-translate-y-0.5 hover:shadow-xl hover:shadow-ink/10 ${todayDone ? "ring-1 ring-accent/30" : ""}`}>
-    <div className="flex items-start justify-between gap-3"><Link to="/habits/$habitId" params={{ habitId: habit.id }} className="min-w-0 flex-1" onClick={onEdit}><h2 className="truncate font-display text-lg font-semibold tracking-tight hover:text-brand">{habit.name}</h2>{habit.description && <p className="mt-0.5 line-clamp-1 text-xs text-muted-foreground">{habit.description}</p>}</Link><span className={`shrink-0 rounded-full px-2.5 py-1 text-[11px] font-semibold ${todayDone ? "bg-success/15 text-success-strong" : metrics.currentStreak ? "bg-brand/15 text-brand-strong" : "bg-secondary text-muted-foreground"}`}>{todayDone ? "Done today" : metrics.currentStreak ? `${metrics.currentStreak}-day streak` : "Not done"}</span></div>
+    <div className="flex items-start justify-between gap-3"><Link to="/habits/$habitId" params={{ habitId: habit.id }} className="min-w-0 flex-1"><h2 className="truncate font-display text-lg font-semibold tracking-tight hover:text-brand">{habit.name}</h2>{habit.description && <p className="mt-0.5 line-clamp-1 text-xs text-muted-foreground">{habit.description}</p>}</Link><span className={`shrink-0 rounded-full px-2.5 py-1 text-[11px] font-semibold ${todayDone ? "bg-success/15 text-success-strong" : metrics.currentStreak ? "bg-brand/15 text-brand-strong" : "bg-secondary text-muted-foreground"}`}>{todayDone ? "Done today" : metrics.currentStreak ? `${metrics.currentStreak}-day streak` : "Not done"}</span></div>
     <div className="mt-5"><div className="flex flex-wrap gap-[3px]">{previewDays.map((key) => <span key={key} title={key} className={`size-3 rounded-[3px] ${doneSet.has(key) ? "bg-brand/80" : "bg-heatmap-empty"}`} />)}</div><div className="mt-4 grid grid-cols-3 gap-2 text-center"><Metric label="Streak" value={metrics.currentStreak} /><Metric label="Longest" value={metrics.longestStreak} /><Metric label="Done" value={`${metrics.completionPercentage}%`} /></div></div>
     <Button type="button" disabled={saving} className={`mt-5 h-14 w-full rounded-2xl text-base shadow-lg transition active:scale-[0.98] ${todayDone ? "bg-success text-success-foreground shadow-success/20 hover:bg-success/90" : "bg-brand text-brand-foreground shadow-brand/25 hover:bg-brand/90"}`} onClick={onToggle}>{saving ? <LoaderCircle className="size-5 animate-spin" /> : todayDone ? <><Check className="size-5" /> Completed · tap to undo</> : <><span className="grid size-5 place-items-center rounded-full border border-current text-xs"><Plus className="size-3" /></span> Mark done today</>}</Button>
     <div className="mt-3 flex justify-end"><Link to="/habits/$habitId" params={{ habitId: habit.id }} className="inline-flex items-center gap-1 text-xs font-semibold text-muted-foreground transition hover:text-brand">View history <ArrowRight className="size-3.5" /></Link></div>
