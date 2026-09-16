@@ -10,33 +10,43 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as HabitsHabitIdRouteImport } from './routes/habits.$habitId'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const HabitsHabitIdRoute = HabitsHabitIdRouteImport.update({
+  id: '/habits/$habitId',
+  path: '/habits/$habitId',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/habits/$habitId': typeof HabitsHabitIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/habits/$habitId': typeof HabitsHabitIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/habits/$habitId': typeof HabitsHabitIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths: '/' | '/habits/$habitId'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to: '/' | '/habits/$habitId'
+  id: '__root__' | '/' | '/habits/$habitId'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  HabitsHabitIdRoute: typeof HabitsHabitIdRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +58,19 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/habits/$habitId': {
+      id: '/habits/$habitId'
+      path: '/habits/$habitId'
+      fullPath: '/habits/$habitId'
+      preLoaderRoute: typeof HabitsHabitIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  HabitsHabitIdRoute: HabitsHabitIdRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
