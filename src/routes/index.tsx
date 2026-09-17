@@ -242,7 +242,7 @@ function HabitDialog({ open, onOpenChange, userId, editing, onSaved }: { open: b
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
   useEffect(() => { setName(editing?.name ?? ""); setDescription(editing?.description ?? ""); setError(null); }, [editing, open]);
-  async function save(event: React.FormEvent<HTMLFormElement>) {
+  async function save(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     if (!name.trim()) return setError("Give this habit a name first.");
     setSaving(true); setError(null);
